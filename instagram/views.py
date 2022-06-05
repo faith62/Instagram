@@ -11,7 +11,7 @@ from .email import send_welcome_email
 def index(request):
    
     
-    return render(request,'index.html')
+    return render(request,'post_detail.html')
 
 @login_required(login_url='/accounts/login/')
 def new_image(request):
