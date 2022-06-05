@@ -5,5 +5,11 @@
 
 <div class="container">
     <h1>INstagram Clone</h1>
+    <div class="row">
+        {% autoescape on %}
+          {{image.post| safe}}
+        {% endautoescape %}
+       </div>
+    
 </div>
 {% endblock %}

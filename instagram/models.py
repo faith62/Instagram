@@ -9,10 +9,12 @@ class Profile(models.Model):
     def __str__(self):
         return self.bio
 
+from tinymce.models import HTMLField
 class Image(models.Model):
     image_name =models.CharField(max_length=50)
     image_caption =models.CharField(max_length=50)
     pic=models.ImageField(upload_to='image/',)
+    post = HTMLField(blank=True,null = True,)
     profile = models.ForeignKey(User, on_delete=models.CASCADE,blank=True,null = True,)
     post_date = models.DateTimeField(auto_now_add=True,blank=True,null = True,)
 
