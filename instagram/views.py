@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.decorators import login_required
 
 from instagram.forms import InstagramImageForm
@@ -7,7 +7,7 @@ from .models import Image,Stream
 
 # Create your views here.
 
-
+@login_required(login_url='/accounts/login/')
 def index(request):
     user = request.user
     images= Stream.objects.filter(user=user)  #get all stream objects created by user
@@ -17,9 +17,16 @@ def index(request):
     for image in images:
         groups_ids.append(image.image_id)
     
-    image_items = Image.objects.filter(id_in = groups_ids).all().order_by('-post_date') #selecting
+    image_items = Image.objects.all().order_by('-post_date') #selecting
         
     return render(request,'index.html',{'image_items':image_items})
+
+@login_required(login_url='/accounts/login/')
+def ImageDetails(request,image_id):
+    image = get_object_or_404(Image, id=image_id)
+
+    return render(request,'post_detail.html',{'image':image})
+
 
 @login_required(login_url='/accounts/login/')
 def new_image(request):
