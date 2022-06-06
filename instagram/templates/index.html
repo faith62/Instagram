@@ -10,28 +10,36 @@
             {% for image_item in image_items%}
             <div class="card">
                 <div class="card-image">
-                <figure class="image is-4by3">
-                    <img src="{{ image_item.pic.url }}" alt="Placeholder image">
-                </figure>
+                    <figure class="image is-4by3">
+                        <a href="{% url 'imagedetails' image_item.id %}"><img src="{{ image_item.pic.url }}" alt="Placeholder image"></a>
+                    </figure>
                 </div>
                 <div class="card-content">
-                <div class="media">
-                    <div class="media-left">
-                    <figure class="image is-48x48">
-                        <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                    </figure>
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4">John Smith</p>
+                            <p class="subtitle is-6">@{{ image_item.user.username }}</p>
+                        </div>
                     </div>
-                    <div class="media-content">
-                    <p class="title is-4">John Smith</p>
-                    <p class="subtitle is-6">@{{ image_item.user.username }}</p>
+                
+                    <div class="content">
+                        {{ image_item.image_caption }}                    
+                        <br>
+                        <time datetime="2016-1-1">{{ image_item.post_date }} </time>
+                        <div class="media-right">
+                            <a href=""><i class="material-icons">save_alt</i>Download</a>
+                            
+                            <a href=""><i class="material-icons">favorite</i>10 Likes</a>
+                           
+                        </div>
+                        
                     </div>
-                </div>
-            
-                <div class="content">
-                    {{ image_item.image_caption }}                    
-                    <br>
-                    <time datetime="2016-1-1">{{ image_item.post_date }} </time>
-                </div>
+                
                 </div>
             </div>
             <br>  

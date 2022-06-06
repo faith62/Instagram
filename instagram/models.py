@@ -1,7 +1,7 @@
 from audioop import reverse
 from django.db import models
 from django.contrib.auth.models import User
-import uuid
+
 from django.db.models.signals import post_save
 
 def user_directory_path(instance, filename):
@@ -17,8 +17,7 @@ class Profile(models.Model):
         return self.bio
 
 from tinymce.models import HTMLField
-class Image(models.Model):
-    
+class Image(models.Model):    
     image_name =models.CharField(max_length=50)
     image_caption =models.CharField(max_length=50)
     pic=models.ImageField(upload_to=user_directory_path,blank=True,null = True)
@@ -52,6 +51,9 @@ class Stream(models.Model):
         for follower in followers:
             stream =Stream(image=image, user=follower.follower,date =image.post_date, following=user)
             stream.save()
+class Likes(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='user_likes')
+    image = models.ForeignKey(Image,on_delete=models.CASCADE,related_name='image_likes')
 
 post_save.connect(Stream.add_image,sender=Image)
 

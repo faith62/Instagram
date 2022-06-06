@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns=[
     path('',views.index, name='indexPage'),
+    path('<image_id>',views.ImageDetails, name='imagedetails'), #name matches the reverse
     path('new/image', views.new_image, name='new-image')
 ]
 if settings.DEBUG:
