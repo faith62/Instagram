@@ -28,11 +28,11 @@
             <div class="media-content">
                 {{ image.image_caption }}
                 <br>
-                <time datetime="2016-1-1">1{{ image.post_date }}</time>
+                <time datetime="2016-1-1">{{ image.post_date }}</time>
             </div>
             <div class="media-right">
                 <a href=""><i class="material-icons">save_alt</i>Download</a>
-                <a href=""><i class="material-icons">favorite</i>Likes</a>
+                <a href="{%url 'imagelike' image.id %}"><i class="material-icons">favorite</i>{{ image.likes }}Likes</a>
                
             </div>
             <div class="media-right">

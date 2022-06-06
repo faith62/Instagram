@@ -1,9 +1,11 @@
+from audioop import reverse
+from distutils.log import error
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.decorators import login_required
 
 from instagram.forms import InstagramImageForm
-from .models import Image,Stream
+from .models import Image, Likes,Stream
 
 # Create your views here.
 
@@ -43,3 +45,25 @@ def new_image(request):
         form = InstagramImageForm()
         
     return render(request, 'new_image.html', {"form": form})
+
+@login_required(login_url='/accounts/login/')
+def like(request, image_id):
+    user = request.user
+    image = Image.objects.get(id = image_id)
+    current_likes = image.likes
+
+    liked = Likes.objects.filter(user = user, image = image).count()
+
+    if not liked:
+        like = Likes.objects.create(user = user, image = image)
+        error
+        current_likes = current_likes + 1
+
+    else:
+        Likes.objects.filter(user = user, image = image).delete()
+        current_likes =current_likes -1
+
+    image.likes = current_likes
+    image.save()
+
+    return render(reverse('imagedetails',args=[image_id]))
