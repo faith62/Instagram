@@ -28,7 +28,7 @@ class Image(models.Model):
     likes = models.IntegerField(blank=True,null = True,)
 
     def __str__(self):
-        return self.image_name
+        return str(self.id)
 
     def get_absolute_url(self):
         return reverse('imagedetails',args=[str(self.id)])#clickto image get to imagedetails url
