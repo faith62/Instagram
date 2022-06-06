@@ -7,11 +7,11 @@ from .email import send_welcome_email
 
 # Create your views here.
 
-@login_required(login_url='/accounts/login/')
+
 def index(request):
    
     
-    return render(request,'profile.html')
+    return render(request,'index.html')
 
 @login_required(login_url='/accounts/login/')
 def new_image(request):
@@ -19,9 +19,9 @@ def new_image(request):
     if request.method == 'POST':
         form = InstagramImageForm(request.POST, request.FILES)
         if form.is_valid():
-            article = form.save(commit=False)
-            article.editor = current_user
-            article.save()
+            image = form.save(commit=False)
+            image.user = current_user
+            image.save()
         return redirect('indexPage')
 
     else:
