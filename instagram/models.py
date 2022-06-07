@@ -55,7 +55,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=50,blank=True,null = True,)
     last_name = models.CharField(max_length=50,blank=True,null = True,)
     bio=models.CharField(max_length=50)
-    profile_photo=models.ImageField(upload_to='profile/',)
+    profile_photo=models.ImageField(upload_to='profile/',blank=True,null = True,)
     url=models.CharField(max_length=50,blank=True,null = True,)
     created =models.DateField(auto_now_add=True,blank=True,null = True,)
 
