@@ -17,11 +17,15 @@ from django.contrib import admin
 from django.urls import path,include
 from django.contrib.auth import views as auth_views
 
+from instagram import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('instagram.urls')),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('logout/', auth_views.LogoutView.as_view(template_name='registration/login.html')),
+    # path('accounts/profile/', auth_views.LoginView.as_view(template_name='profile.html')),  
+    path('logout/', auth_views.LogoutView.as_view(template_name='registration/login.html')),    
     path('tinymce/', include('tinymce.urls')),
+    path('<username>/',views.UserProfile, name='profile'),
 ]

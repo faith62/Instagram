@@ -8,7 +8,7 @@ urlpatterns=[
     path('<image_id>',views.ImageDetails, name='imagedetails'), #name matches the reverse
     path('new/image', views.new_image, name='new-image'),
     path('<image_id>/like',views.like, name='imagelike'),
-    path('<username>/',views.UserProfile, name='profile'),
+    
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
