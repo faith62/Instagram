@@ -48,11 +48,13 @@
 <section class="section">
     <div class="container">
         <div class="columns is-mobile is multiline is centered">
+          {% for image in image %}
             <div class="column is-one-quater">
                 <figure class="image is-128x128">
-                    <img src="https://bulma.io/images/placeholders/128x128.png" alt="image">
+                   <a href="{{ image.get_absolute_url }}"> <img src="{{ image.pic.url }}" alt="image"></a>
                 </figure>
             </div>
+          {% endfor %}
         </div>
     </div>
 

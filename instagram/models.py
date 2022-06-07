@@ -10,11 +10,26 @@ def user_directory_path(instance, filename):
 
 # Create your models here.
 class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE,blank=True,null = True,)
+    first_name = models.CharField(max_length=50,blank=True,null = True,)
+    last_name = models.CharField(max_length=50,blank=True,null = True,)
     bio=models.CharField(max_length=50)
     profile_photo=models.ImageField(upload_to='profile/',)
+    url=models.CharField(max_length=50,blank=True,null = True,)
+    created =models.DateField(auto_now_add=True,blank=True,null = True,)
 
     def __str__(self):
-        return self.bio
+        return self.first_name
+
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    def save_user_profile(sender,instance, **kwargs):
+        instance.profile.save()
+
+    post_save.connect(create_user_profile, sender=User)
+    post_save.connect(save_user_profile, sender=User)
 
 from tinymce.models import HTMLField
 class Image(models.Model):    
