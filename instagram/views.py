@@ -1,4 +1,4 @@
-from audioop import reverse
+from django.urls import reverse
 from distutils.log import error
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render,redirect
@@ -55,8 +55,7 @@ def like(request, image_id):
     liked = Likes.objects.filter(user = user, image = image).count()
 
     if not liked:
-        like = Likes.objects.create(user = user, image = image)
-        error
+        like = Likes.objects.create(user = user, image = image)      
         current_likes = current_likes + 1
 
     else:
@@ -66,4 +65,4 @@ def like(request, image_id):
     image.likes = current_likes
     image.save()
 
-    return render(reverse('imagedetails',args=[image_id]))
+    return HttpResponseRedirect(reverse('imagedetails',args=[image.id]))
