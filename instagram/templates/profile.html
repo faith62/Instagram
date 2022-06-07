@@ -13,7 +13,9 @@
     </div>
     <div class="media-right">
         <div>
-            <h1 class="title">@Chemutai</h1>
+            <h1 class="title">{% if profile.first_name %}{{ profile.first_name}} {{ profile.last_name}} {% endif %}</h1>
+            <h2 class="subtitle is_3">@{{ profile.user}}</h2>
+            <p class="subtitle is-6">{% if profile.bio %}{{ profile.bio }} {% endif%}</p>
             <button class="button is-success">Follow</button>
         </div>
     </div>
@@ -22,41 +24,47 @@
         
         <div class="level-item has-text-centered">
           <div>
+            <p class="heading">Posts</p>
+            <p class="title">{{image_count}}</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
             <p class="heading">Following</p>
-            <p class="title">123</p>
+            <p class="title">{{following_count}}</p>
           </div>
         </div>
         <div class="level-item has-text-centered">
           <div>
             <p class="heading">Followers</p>
-            <p class="title">456K</p>
-          </div>
-        </div>
-        <div class="level-item has-text-centered">
-          <div>
-            <p class="heading">Likes</p>
-            <p class="title">789</p>
+            <p class="title">{{followers_count}}</p>
           </div>
         </div>
         
+        
     </nav>
-    <p class="subtitle is-6">Description kwekek jejj nvnvgi emkeireief jerririierfmfkfkr</p>
-    <a  class="btn button is-success" href="">Edit Profile</a>
+    
+
+    {% if user.is_authenticated and user == profile.user %}
+    <a  class="btn button is-success" href="{% url 'editprofile' %}">Edit Profile</a>
+    {% endif %}
     </div>
 
     
 </div>
-
+    <section>
+      <div class="container">
         <div class="columns is-mobile is multiline is centered">
           {% for image in images %}
             <div class="column is-one-quater">
-              <div class="box">
-                <figure class="image is-256x256">
-                   <a href=""> <img src="{{ image.pic.url }}" alt="image" ></a>
+              
+                <figure >
+                   <a href=""> <img src="{{ image.pic.url }}" alt="image" width="500" height="500" ></a>
                 </figure>
-              </div>
             </div>
+           
           {% endfor %}
         </div>
-    
+      </div>
+    </section>
 {% endblock %}
