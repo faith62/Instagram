@@ -14,6 +14,9 @@ import os
 from pathlib import Path
 from decouple import config
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +41,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'tinymce',
     'responsive_images',
+    'cloudinary_storage',  
+    'cloudinary', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -124,6 +129,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -135,6 +141,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Email configurations remember to install python-decouple
@@ -145,3 +152,14 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 LOGIN_REDIRECT_URL = '/'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dgrjyra6k',
+    'API_KEY': '748511361159413',
+    'API_SECRET': 'bn0udwsD1_RzIs8Im7u_BYe26CE'
+}
+
+UPLOADCARE = {
+    'pub_key': 'demopublickey',
+    'secret': 'demoprivatekey',
+}
