@@ -29,6 +29,13 @@ class Image(models.Model):
 
     class Meta:
         ordering = ['image_name']
+
+    def save_image(self):
+        self.save()
+
+    def delete_image(self):
+        self.delete()
+
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE,related_name='follower')
     following = models.ForeignKey(User, on_delete=models.CASCADE,related_name='following')
@@ -46,6 +53,14 @@ class Stream(models.Model):
         for follower in followers:
             stream =Stream(image=image, user=follower.follower,date =image.post_date, following=user)
             stream.save()
+
+    
+    def save_stream(self):
+        self.save()
+
+    def delete_stream(self):
+        self.delete()
+
 class Likes(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE, related_name='user_likes')
     image = models.ForeignKey(Image,on_delete=models.CASCADE,related_name='image_likes')
@@ -69,14 +84,25 @@ class Profile(models.Model):
     def save_user_profile(sender,instance, **kwargs):
         instance.profile.save()
 
+    def save_profile(self):
+        self.save()
+
+    def delete_profile(self):
+        self.delete()
     post_save.connect(create_user_profile, sender=User)
     post_save.connect(save_user_profile, sender=User)
 
 class Comment(models.Model):
-    image=models.ForeignKey(Image, on_delete=models.CASCADE)
+    image=models.ForeignKey(Image, on_delete=models.CASCADE,)
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     body=models.TextField()
     date=models.DateTimeField(auto_now_add=True)
+
+    def save_comment(self):
+        self.save()
+
+    def delete_comment(self):
+        self.delete()
 
 post_save.connect(Stream.add_image,sender=Image)
 
