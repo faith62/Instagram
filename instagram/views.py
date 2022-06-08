@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 
-from instagram.forms import EditProfileForm, InstagramImageForm
-from .models import Follow, Image, Likes, Profile,Stream
+from instagram.forms import CommentForm, EditProfileForm, InstagramImageForm
+from .models import Follow, Image, Likes, Profile,Stream,Comment
 from django.urls import resolve #help identify url name
 
 # Create your views here.
@@ -39,7 +39,10 @@ def UserProfile(request, username):
 @login_required(login_url='/accounts/login/')
 def index(request):
     user = request.user
+    
+    
     images= Stream.objects.filter(user=user)  #get all stream objects created by user
+    profile = Profile.objects.get(user=user)
 
     groups_ids= [] #create empty dict
 
@@ -48,13 +51,29 @@ def index(request):
     
     image_items = Image.objects.all().order_by('-post_date') #selecting
         
-    return render(request,'index.html',{'image_items':image_items})
+    return render(request,'index.html',{'image_items':image_items,'profile':profile,})
 
 @login_required(login_url='/accounts/login/')
 def ImageDetails(request,image_id):
     image = get_object_or_404(Image, id=image_id)
+    user=request.user
+    #comment
+    comments=Comment.objects.filter(image=image).order_by('date')
 
-    return render(request,'post_detail.html',{'image':image})
+    #comment form
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.image= image
+            comment.user= user
+            comment.save()
+        return HttpResponseRedirect(reverse('imagedetails',args=[image.id]))
+
+    else:
+        form = CommentForm()
+
+    return render(request,'post_detail.html',{'image':image, 'comments':comments, 'form':form})
 
 
 @login_required(login_url='/accounts/login/')

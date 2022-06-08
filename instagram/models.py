@@ -72,6 +72,12 @@ class Profile(models.Model):
     post_save.connect(create_user_profile, sender=User)
     post_save.connect(save_user_profile, sender=User)
 
+class Comment(models.Model):
+    image=models.ForeignKey(Image, on_delete=models.CASCADE)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    body=models.TextField()
+    date=models.DateTimeField(auto_now_add=True)
+
 post_save.connect(Stream.add_image,sender=Image)
 
 

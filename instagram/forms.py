@@ -1,5 +1,5 @@
 from django import forms
-from .models import Image, Profile
+from .models import Comment, Image, Profile
 
 class InstagramImageForm(forms.ModelForm):
     class Meta:
@@ -21,3 +21,13 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('profile_photo','first_name','last_name','url', 'bio' )
+
+class CommentForm(forms.ModelForm):   
+    class Meta:
+        model = Comment
+        widgets = {
+            'body':forms.TextInput(),
+                    
+        }
+
+        fields = ('body',)
