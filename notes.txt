@@ -1,4 +1,0 @@
-python3.10 manage.py check ......run checks
-python manage.py makemigrations ....make migration
-python3.10 manage.py sqlmigrate instagram 0001 ...view migration
-python3.10 manage.py migrate
